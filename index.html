@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kiseleva — Студия дизайна интерьеров</title>
+  <meta name="description" content="Премиальная студия дизайна интерьеров. Создаём пространства с характером: жилые и коммерческие интерьеры под ключ." />
+
+  <!-- Google Fonts: Playfair Display + Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#FDFBF7',
+            ink: '#1A1A1A',
+            muted: '#6B6B6B',
+            accent: '#C5A880',
+            'accent-dark': '#A88B5E',
+            dark: '#111111',
+            line: '#E5E0D8',
+          },
+          fontFamily: {
+            display: ['"Playfair Display"', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          },
+          letterSpacing: {
+            label: '0.2em',
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Кастомные стили -->
+  <style>
+    html, body { overflow-x: hidden; }
+    body { background-color: #FDFBF7; color: #1A1A1A; }
+    ::selection { background: #C5A880; color: #111111; }
+
+    /* Плавное появление секций при скролле */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.is-visible { opacity: 1; transform: none; }
+
+    /* Кастомный скроллбар (опционально) */
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: #FDFBF7; }
+    ::-webkit-scrollbar-thumb { background: #E5E0D8; }
+    ::-webkit-scrollbar-thumb:hover { background: #C5A880; }
+
+    /* Кастомный ползунок калькулятора */
+    input[type="range"].range {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 2px;
+      background: #E5E0D8;
+      outline: none;
+      cursor: pointer;
+    }
+    input[type="range"].range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 9999px;
+      background: #C5A880;
+      border: 4px solid #FDFBF7;
+      box-shadow: 0 0 0 1px #C5A880;
+      transition: transform .2s ease;
+    }
+    input[type="range"].range::-webkit-slider-thumb:hover { transform: scale(1.12); }
+    input[type="range"].range::-moz-range-thumb {
+      width: 22px;
+      height: 22px;
+      border-radius: 9999px;
+      background: #C5A880;
+      border: 4px solid #FDFBF7;
+      box-shadow: 0 0 0 1px #C5A880;
+    }
+    input[type="range"].range::-moz-range-track { height: 2px; background: #E5E0D8; }
+  </style>
+</head>
+<body class="font-sans antialiased">
+
+  <!-- ============================================================
+       HEADER
+  ============================================================= -->
+  <header id="site-header" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
+      <div class="flex items-center justify-between h-20 md:h-24 transition-all duration-300">
+        <!-- Логотип -->
+        <a href="#hero" class="font-display text-2xl md:text-3xl tracking-tight text-ink transition-colors duration-300" data-header-logo>
+          Kiseleva<span class="text-accent">.</span>
+        </a>
+
+        <!-- Навигация (desktop) -->
+        <nav class="hidden md:flex items-center gap-10" data-header-nav>
+          <a href="#about" class="text-sm uppercase tracking-label font-medium text-ink/70 hover:text-accent transition-colors">О студии</a>
+          <a href="#services" class="text-sm uppercase tracking-label font-medium text-ink/70 hover:text-accent transition-colors">Услуги</a>
+          <a href="#portfolio" class="text-sm uppercase tracking-label font-medium text-ink/70 hover:text-accent transition-colors">Проекты</a>
+          <a href="#process" class="text-sm uppercase tracking-label font-medium text-ink/70 hover:text-accent transition-colors">Процесс</a>
+          <a href="#contact" class="text-sm uppercase tracking-label font-medium text-ink/70 hover:text-accent transition-colors">Контакты</a>
+        </nav>
+
+        <div class="flex items-center gap-4">
+          <!-- CTA кнопка (desktop) -->
+          <a href="#contact" class="hidden md:inline-flex items-center px-6 py-3 bg-accent text-ink text-xs uppercase tracking-label font-medium hover:bg-accent-dark transition-colors">
+            Оставить заявку
+          </a>
+          <!-- Бургер (mobile) -->
+          <button id="burger" type="button" aria-label="Открыть меню" aria-expanded="false" class="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5" data-header-burger>
+            <span class="block w-6 h-px bg-ink transition-all duration-300" data-burger-line></span>
+            <span class="block w-6 h-px bg-ink transition-all duration-300" data-burger-line></span>
+            <span class="block w-6 h-px bg-ink transition-all duration-300" data-burger-line></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Мобильное меню -->
+    <div id="mobile-menu" class="md:hidden fixed inset-0 z-40 bg-cream translate-x-full transition-transform duration-500 ease-in-out">
+      <div class="h-20"></div>
+      <nav class="flex flex-col items-start px-8 pt-8 gap-2">
+        <a href="#about" class="mobile-link font-display text-4xl py-3 text-ink hover:text-accent transition-colors">О студии</a>
+        <a href="#services" class="mobile-link font-display text-4xl py-3 text-ink hover:text-accent transition-colors">Услуги</a>
+        <a href="#portfolio" class="mobile-link font-display text-4xl py-3 text-ink hover:text-accent transition-colors">Проекты</a>
+        <a href="#process" class="mobile-link font-display text-4xl py-3 text-ink hover:text-accent transition-colors">Процесс</a>
+        <a href="#testimonials" class="mobile-link font-display text-4xl py-3 text-ink hover:text-accent transition-colors">Отзывы</a>
+        <a href="#contact" class="mobile-link font-display text-4xl py-3 text-ink hover:text-accent transition-colors">Контакты</a>
+      </nav>
+      <div class="px-8 mt-10">
+        <a href="#contact" class="mobile-link inline-flex items-center px-8 py-4 bg-ink text-cream text-xs uppercase tracking-label font-medium hover:bg-accent hover:text-ink transition-colors">Оставить заявку</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============================================================
+         HERO
+    ============================================================= -->
+    <section id="hero" class="relative bg-cream pt-32 md:pt-40 pb-20 md:pb-28">
+      <div class="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+          <!-- Текст слева -->
+          <div class="max-w-xl">
+            <p class="reveal text-xs md:text-sm uppercase tracking-label text-accent font-medium mb-6" data-delay="0">
+              Студия дизайна интерьеров
+            </p>
+            <h1 class="reveal font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight tracking-tight text-ink" data-delay="100">
+              Интерьеры,<br class="hidden sm:block" /> в которых хочется жить.
+              <span class="block mt-5 text-xl sm:text-2xl md:text-3xl font-normal text-muted">
+                Проектирование и реализация под ключ
+              </span>
+            </h1>
+            <p class="reveal mt-8 text-base md:text-lg font-light leading-relaxed text-muted max-w-lg" data-delay="200">
+              Создаём пространства, где продумана каждая деталь — от планировки до ткани штор. Минимализм, натуральные материалы и свет.
+            </p>
+            <div class="reveal mt-10" data-delay="300">
+              <a href="#contact" class="group inline-flex items-center gap-3 px-8 py-4 border border-ink/30 text-ink text-xs uppercase tracking-label font-medium hover:border-accent hover:text-accent transition-colors">
+                Обсудить проект
+                <span class="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Фотография справа -->
+          <div class="reveal" data-delay="200">
+            <div class="relative overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80"
+                alt="Стильная гостиная в стиле modern minimalist interior"
+                class="w-full h-[420px] md:h-[560px] lg:h-[680px] object-cover" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ABOUT
+    ============================================================= -->
+    <section id="about" class="py-24 md:py-32 bg-cream">
+      <div class="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <!-- Изображение -->
+          <div class="reveal order-2 lg:order-1">
+            <div class="relative">
+              <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1200&q=80" alt="Деталь интерьера: кресло у окна" class="w-full h-[420px] md:h-[560px] object-cover" />
+              <div class="hidden md:block absolute -bottom-8 -right-8 bg-dark text-cream p-8 w-56">
+                <p class="font-display text-5xl text-accent leading-none">12</p>
+                <p class="mt-3 text-xs uppercase tracking-label text-cream/60">лет создаём интерьеры</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Текст -->
+          <div class="reveal order-1 lg:order-2" data-delay="150">
+            <p class="text-xs md:text-sm uppercase tracking-label text-accent font-medium mb-4">О студии</p>
+            <h2 class="font-display text-3xl md:text-5xl leading-tight tracking-tight text-ink">
+              Философия тихой роскоши
+            </h2>
+            <span class="block w-16 h-px bg-accent mt-8 mb-8"></span>
+            <p class="text-base md:text-lg font-light leading-relaxed text-muted">
+              Kiseleva — это команда архитекторов и дизайнеров, для которых интерьер начинается с пространства, света и сценариев жизни. Мы не украшаем — мы выстраиваем гармонию формы, материала и функции.
+            </p>
+            <p class="mt-5 text-base md:text-lg font-light leading-relaxed text-muted">
+              Каждый проект уникален и начинается с диалога. Мы работаем с жилыми и коммерческими пространствами по всему миру.
+            </p>
+
+            <ul class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <li class="flex items-start gap-3">
+                <span class="mt-1 text-accent" aria-hidden="true">—</span>
+                <span class="text-sm text-ink">Авторский подход к каждому проекту</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-1 text-accent" aria-hidden="true">—</span>
+                <span class="text-sm text-ink">Натуральные материалы и свет</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-1 text-accent" aria-hidden="true">—</span>
+                <span class="text-sm text-ink">Полный цикл: от эскиза до реализации</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-1 text-accent" aria-hidden="true">—</span>
+                <span class="text-sm text-ink">Прозрачная смета и сроки</span>
+              </li>
+            </ul>
+
+            <div class="mt-12">
+              <p class="font-display text-2xl text-ink">Киселева Елена</p>
+              <p class="text-xs uppercase tracking-label text-muted mt-1">Основатель и креативный директор</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SERVICES
+    ============================================================= -->
+    <section id="services" class="py-24 md:py-32 bg-dark text-cream">
+      <div class="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
+        <div class="reveal max-w-2xl mb-16 md:mb-20">
+          <p class="text-xs md:text-sm uppercase tracking-label text-accent font-medium mb-4">Услуги</p>
+          <h2 class="font-display text-3xl md:text-5xl leading-tight tracking-tight text-cream">
+            Полный цикл<br /> дизайна интерьера
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-cream/10">
+          <!-- Карточка 1 -->
+          <article class="reveal bg-dark p-8 md:p-10 group hover:bg-ink transition-colors duration-300">
+            <div class="w-12 h-12 flex items-center justify-center text-accent">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg>
+            </div>
+            <h3 class="font-display text-2xl text-cream mt-8">Дизайн-проект</h3>
+            <p class="mt-4 text-sm font-light leading-relaxed text-cream/60">
+              Полный пакет: обмеры, планировка, 3D-визуализации, рабочие чертежи и спецификации материалов.
+            </p>
+            <p class="mt-8 text-xs uppercase tracking-label text-accent">от 3 500 ₽/м²</p>
+          </article>
+
+          <!-- Карточка 2 -->
+          <article class="reveal bg-dark p-8 md:p-10 group hover:bg-ink transition-colors duration-300" data-delay="100">
+            <div class="w-12 h-12 flex items-center justify-center text-accent">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.09 6.26L20.5 9.5l-5 4.09L17 20l-5-3.5L7 20l1.5-6.41-5-4.09 6.41-.24z"/></svg>
+            </div>
+            <h3 class="font-display text-2xl text-cream mt-8">Авторский надзор</h3>
+            <p class="mt-4 text-sm font-light leading-relaxed text-cream/60">
+              Контроль реализации на объекте, подбор подрядчиков и защита концепции на каждом этапе работ.
+            </p>
+            <p class="mt-8 text-xs uppercase tracking-label text-accent">от 1 200 ₽/м²</p>
+          </article>
+
+          <!-- Карточка 3 -->
+          <article class="reveal bg-dark p-8 md:p-10 group hover:bg-ink transition-colors duration-300" data-delay="200">
+            <div class="w-12 h-12 flex items-center justify-center text-accent">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V8l8-5 8 5v12"/><path d="M4 20h16"/><path d="M9 20v-6h6v6"/></svg>
+            </div>
+            <h3 class="font-display text-2xl text-cream mt-8">Комплектация</h3>
+            <p class="mt-4 text-sm font-light leading-relaxed text-cream/60">
+              Подбор мебели, света и декора, работа с поставщиками, логистика и финальный стайлинг.
+            </p>
+            <p class="mt-8 text-xs uppercase tracking-label text-accent">по запросу</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PORTFOLIO
+    ============================================================= -->
+    <section id="portfolio" class="py-24 md:py-32 bg-cream">
+      <div class="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
+        <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-12 md:mb-16">
+          <div class="max-w-xl">
+            <p class="text-xs md:text-sm uppercase tracking-label text-accent font-medium mb-4">Портфолио</p>
+            <h2 class="font-display text-3xl md:text-5xl leading-tight tracking-tight text-ink">Избранные проекты</h2>
+          </div>
+          <!-- Фильтр -->
+          <div class="flex flex-wrap gap-x-6 gap-y-3" id="portfolio-filter">
+            <button type="button" data-filter="all" class="filter-btn text-xs uppercase tracking-label font-medium text-ink border-b border-accent pb-1">Все</button>
+            <button type="button" data-filter="residential" class="filter-btn text-xs uppercase tracking-label font-medium text-muted hover:text-ink border-b border-transparent pb-1 transition-colors">Жилые</button>
+            <button type="button" data-filter="commercial" class="filter-btn text-xs uppercase tracking-label font-medium text-muted hover:text-ink border-b border-transparent pb-1 transition-colors">Коммерческие</button>
+            <button type="button" data-filter="public" class="filter-btn text-xs uppercase tracking-label font-medium text-muted hover:text-ink border-b border-transparent pb-1 transition-colors">Общественные</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8" id="portfolio-grid">
+          <!-- Проект 1 -->
+          <article class="portfolio-item reveal" data-category="residential">
+            <a href="#portfolio" class="block group overflow-hidden">
+              <div class="relative overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=80" alt="Квартира в центре, проект жилого интерьера" class="w-full h-[320px] md:h-[480px] object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/30 transition-colors duration-500"></div>
+              </div>
+              <div class="flex items-start justify-between mt-5">
+                <div>
+                  <h3 class="font-display text-xl md:text-2xl text-ink group-hover:text-accent transition-colors">Квартира на Патриарших</h3>
+                  <p class="text-xs uppercase tracking-label text-muted mt-2">Жилой интерьер · 148 м²</p>
+                </div>
+                <span class="text-accent text-2xl leading-none" aria-hidden="true">↗</span>
+              </div>
+            </a>
+          </article>
+
+          <!-- Проект 2 -->
+          <article class="portfolio-item reveal" data-category="commercial" data-delay="100">
+            <a href="#portfolio" class="block group overflow-hidden">
+              <div class="relative overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=80" alt="Офисное пространство, коммерческий интерьер" class="w-full h-[320px] md:h-[480px] object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/30 transition-colors duration-500"></div>
+              </div>
+              <div class="flex items-start justify-between mt-5">
+                <div>
+                  <h3 class="font-display text-xl md:text-2xl text-ink group-hover:text-accent transition-colors">Офис IT-компании</h3>
+                  <p class="text-xs uppercase tracking-label text-muted mt-2">Коммерческий · 620 м²</p>
+                </div>
+                <span class="text-accent text-2xl leading-none" aria-hidden="true">↗</span>
+              </div>
+            </a>
+          </article>
+
+          <!-- Проект 3 -->
+          <article class="portfolio-item reveal" data-category="residential">
+            <a href="#portfolio" class="block group overflow-hidden">
+              <div class="relative overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1400&q=80" alt="Спальня, жилой интерьер" class="w-full h-[320px] md:h-[480px] object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/30 transition-colors duration-500"></div>
+              </div>
+              <div class="flex items-start justify-between mt-5">
+                <div>
+                  <h3 class="font-display text-xl md:text-2xl text-ink group-hover:text-accent transition-colors">Загородный дом</h3>
+                  <p class="text-xs uppercase tracking-label text-muted mt-2">Жилой интерьер · 310 м²</p>
+                </div>
+                <span class="text-accent text-2xl leading-none" aria-hidden="true">↗</span>
+              </div>
+            </a>
+          </article>
+
+          <!-- Проект 4 -->
+          <article class="portfolio-item reveal" data-category="public" data-delay="100">
+            <a href="#portfolio" class="block group overflow-hidden">
+              <div class="relative overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=80" alt="Лаунж-зона, общественный интерьер" class="w-full h-[320px] md:h-[480px] object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/30 transition-colors duration-500"></div>
+              </div>
+              <div class="flex items-start justify-between mt-5">
+                <div>
+                  <h3 class="font-display text-xl md:text-2xl text-ink group-hover:text-accent transition-colors">Лаундж-бар «Линия»</h3>
+                  <p class="text-xs uppercase tracking-label text-muted mt-2">Общественный · 240 м²</p>
+                </div>
+                <span class="text-accent text-2xl leading-none" aria-hidden="true">↗</span>
+              </div>
+            </a>
+          </article>
+
+          <!-- Проект 5 -->
+          <article class="portfolio-item reveal" data-category="commercial">
+            <a href="#portfolio" class="block group overflow-hidden">
+              <div class="relative overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=80" alt="Переговорная, коммерческий интерьер" class="w-full h-[320px] md:h-[480px] object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/30 transition-colors duration-500"></div>
+              </div>
+              <div class="flex items-start justify-between mt-5">
+                <div>
+                  <h3 class="font-display text-xl md:text-2xl text-ink group-hover:text-accent transition-colors">Шоурум мебели</h3>
+                  <p class="text-xs uppercase tracking-label text-muted mt-2">Коммерческий · 380 м²</p>
+                </div>
+                <span class="text-accent text-2xl leading-none" aria-hidden="true">↗</span>
+              </div>
+            </a>
+          </article>
+
+          <!-- Проект 6 -->
+          <article class="portfolio-item reveal" data-category="public" data-delay="100">
+            <a href="#portfolio" class="block group overflow-hidden">
+              <div class="relative overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1400&q=80" alt="Ресепшн отеля, общественный интерьер" class="w-full h-[320px] md:h-[480px] object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div class="absolute inset-0 bg-dark/0 group-hover:bg-dark/30 transition-colors duration-500"></div>
+              </div>
+              <div class="flex items-start justify-between mt-5">
+                <div>
+                  <h3 class="font-display text-xl md:text-2xl text-ink group-hover:text-accent transition-colors">Бутик-отель</h3>
+                  <p class="text-xs uppercase tracking-label text-muted mt-2">Общественный · 900 м²</p>
+                </div>
+                <span class="text-accent text-2xl leading-none" aria-hidden="true">↗</span>
+              </div>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         REALIZED PROJECTS — Bento Grid
+    ============================================================= -->
+    <section id="realized" class="py-24 md:py-32 bg-cream border-t border-line">
+      <div class="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
+        <div class="reveal max-w-2xl mb-12 md:mb-16">
+          <p class="text-xs md:text-sm uppercase tracking-label text-accent font-medium mb-4">Портфолио</p>
+          <h2 class="font-display text-3xl md:text-5xl leading-tight tracking-tight text-ink">Реализованные проекты</h2>
+        </div>
+
+        <!-- Bento Grid: 3 колонки разной ширины и высоты -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[240px] md:auto-rows-[280px]">
+
+          <!-- Карточка 1 — большая (2x2) -->
+          <a href="#portfolio" class="group relative block overflow-hidden reveal md:col-span-2 md:row-span-2">
+            <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1600&q=80" alt="Апартаменты в ЖК Light" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/85 via-dark/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="absolute inset-x-0 bottom-0 p-6 md:p-8 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+              <h3 class="font-display text-xl md:text-3xl text-cream">Апартаменты в ЖК «Light»</h3>
+              <p class="text-xs uppercase tracking-label text-cream/70 mt-2">120 м² · Жилой интерьер</p>
+            </div>
+          </a>
+
+          <!-- Карточка 2 -->
+          <a href="#portfolio" class="group relative block overflow-hidden reveal" data-delay="100">
+            <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1000&q=80" alt="Пентхаус на Пречистенке" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/85 via-dark/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="absolute inset-x-0 bottom-0 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+              <h3 class="font-display text-lg md:text-xl text-cream">Пентхаус на Пречистенке</h3>
+              <p class="text-xs uppercase tracking-label text-cream/70 mt-2">210 м²</p>
+            </div>
+          </a>
+
+          <!-- Карточка 3 -->
+          <a href="#portfolio" class="group relative block overflow-hidden reveal" data-delay="200">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80" alt="Кухня-гостиная в скандинавском стиле" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/85 via-dark/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="absolute inset-x-0 bottom-0 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+              <h3 class="font-display text-lg md:text-xl text-cream">Кухня-гостиная, скандинавский стиль</h3>
+              <p class="text-xs uppercase tracking-label text-cream/70 mt-2">38 м²</p>
+            </div>
+          </a>
+
+          <!-- Карточка 4 — высокая (1x2) -->
+          <a href="#portfolio" class="group relative block overflow-hidden reveal md:row-span-2" data-delay="100">
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=80" alt="Загородная вилла" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/85 via-dark/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="absolute inset-x-0 bottom-0 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+              <h3 class="font-display text-lg md:text-xl text-cream">Загородная вилла</h3>
+              <p class="text-xs uppercase tracking-label text-cream/70 mt-2">340 м²</p>
+            </div>
+          </a>
+
+          <!-- Карточка 5 -->
+          <a href="#portfolio" class="group relative block overflow-hidden reveal" data-delay="200">
+            <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1000&q=80" alt="Офис студии дизайна" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/85 via-dark/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="absolute inset-x-0 bottom-0 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+              <h3 class="font-display text-lg md:text-xl text-cream">Офис студии</h3>
+              <p class="text-xs uppercase tracking-label text-cream/70 mt-2">95 м²</p>
+            </div>
+          </a>
+
+          <!-- Карточка 6 -->
+          <a href="#portfolio" class="group relative block overflow-hidden reveal" data-delay="300">
+            <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1000&q=80" alt="Спальня в апартаментах" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/85 via-dark/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="absolute inset-x-0 bottom-0 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+              <h3 class="font-display text-lg md:text-xl text-cream">Спальня в апартаментах</h3>
+              <p class="text-xs uppercase tracking-label text-cream/70 mt-2">54 м²</p>
+            </div>
+          </a>
+
+          <!-- Карточка 7 — широкая (2x1) -->
+          <a href="#portfolio" class="group relative block overflow-hidden reveal md:col-span-2" data-delay="100">
+            <img src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1600&q=80" alt="Лофт на Красном Октябре" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/85 via-dark/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="absolute inset-x-0 bottom-0 p-6 md:p-8 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+              <h3 class="font-display text-xl md:text-2xl text-cream">Лофт на Красном Октябре</h3>
+              <p class="text-xs uppercase tracking-label text-cream/70 mt-2">160 м² · Общественное пространство</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         FULL CYCLE — «Полный цикл: от бетона до текстиля»
+    ============================================================= -->
+    <section id="full-cycle" class="py-24 md:py-32 bg-cream border-t border-line">
+      <div class="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-start">
+
+          <!-- Манифест слева -->
+          <div class="reveal max-w-xl">
+            <p class="text-xs md:text-sm uppercase tracking-label text-accent font-medium mb-4">Полный цикл</p>
+            <h2 class="font-display text-3xl md:text-5xl leading-tight tracking-tight text-ink">
+              От бетона<br /> до текстиля
+            </h2>
+            <span class="block w-16 h-px bg-accent mt-8 mb-8"></span>
+            <p class="text-lg md:text-xl font-light leading-relaxed text-ink">
+              Мы берём на себя весь путь проекта — без посредников и потерянных договорённостей.
+            </p>
+            <p class="mt-5 text-base md:text-lg font-light leading-relaxed text-muted">
+              Чертежи и рабочая документация, закупка материалов и мебели, авторский надзор на объекте и финальный клининг. Вы получаете готовое пространство, а не набор файлов.
+            </p>
+          </div>
+
+          <!-- Этапы справа -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-12">
+
+            <!-- Этап 1 -->
+            <div class="reveal border-t border-ink/20 pt-6">
+              <p class="font-display text-4xl md:text-5xl text-accent leading-none">01</p>
+              <h3 class="font-display text-xl md:text-2xl text-ink mt-5">Планировка</h3>
+              <p class="mt-3 text-sm font-light leading-relaxed text-muted">Обмеры, зонирование и планировочные решения под ваш сценарий жизни.</p>
+            </div>
+
+            <!-- Этап 2 -->
+            <div class="reveal border-t border-ink/20 pt-6" data-delay="100">
+              <p class="font-display text-4xl md:text-5xl text-accent leading-none">02</p>
+              <h3 class="font-display text-xl md:text-2xl text-ink mt-5">3D-визуализация</h3>
+              <p class="mt-3 text-sm font-light leading-relaxed text-muted">Фотореалистичные образы будущего интерьера до начала работ.</p>
+            </div>
+
+            <!-- Этап 3 -->
+            <div class="reveal border-t border-ink/20 pt-6" data-delay="200">
+              <p class="font-display text-4xl md:text-5xl text-accent leading-none">03</p>
+              <h3 class="font-display text-xl md:text-2xl text-ink mt-5">Комплектация</h3>
+              <p class="mt-3 text-sm font-light leading-relaxed text-muted">Подбор и закупка мебели, света, отделки и декора у проверенных поставщиков.</p>
+            </div>
+
+            <!-- Этап 4 -->
+            <div class="reveal border-t border-ink/20 pt-6" data-delay="300">
+              <p class="font-display text-4xl md:text-5xl text-accent leading-none">04</p>
+              <h3 class="font-display text-xl md:text-2xl text-ink mt-5">Авторский надзор</h3>
+              <p class="mt-3 text-sm font-light leading-relaxed text-muted">Контроль реализации на объекте и финальный стайлинг пространства.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PROCESS
+    ============================================================= -->
+    <section id="process" class="py-24 md:py-32 bg-cream border-t border-line">
+      <div class="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
+        <div class="reveal max-w-2xl mb-16 md:mb-20">
+          <p class="text-xs md:text-sm uppercase tracking-label text-accent font-medium mb-4">Процесс</p>
+          <h2 class="font-display text-3xl md:text-5xl leading-tight tracking-tight text-ink">Как мы работаем</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-8">
+          <div class="reveal">
+            <p class="font-display text-5xl text-accent leading-none">01</p>
+            <h3 class="font-display text-xl md:text-2xl text-ink mt-6">Знакомство</h3>
+            <p class="mt-3 text-sm font-light leading-relaxed text-muted">Обсуждаем задачу, образ жизни и бюджет. Формируем brief проекта.</p>
+          </div>
+          <div class="reveal" data-delay="100">
+            <p class="font-display text-5xl text-accent leading-none">02</p>
+            <h3 class="font-display text-xl md:text-2xl text-ink mt-6">Концепция</h3>
+            <p class="mt-3 text-sm font-light leading-relaxed text-muted">Планировочные решения, коллажи, палитра материалов и света.</p>
+          </div>
+          <div class="reveal" data-delay="200">
+            <p class="font-display text-5xl text-accent leading-none">03</p>
+            <h3 class="font-display text-xl md:text-2xl text-ink mt-6">Проект</h3>
+            <p class="mt-3 text-sm font-light leading-relaxed text-muted">3D-визуализации, рабочие чертежи, спецификации и сметы.</p>
+          </div>
+          <div class="reveal" data-delay="300">
+            <p class="font-display text-5xl text-accent leading-none">04</p>
+            <h3 class="font-display text-xl md:text-2xl text-ink mt-6">Реализация</h3>
+            <p class="mt-3 text-sm font-light leading-relaxed text-muted">Авторский надзор, комплектация и финальный стайлинг объекта.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TESTIMONIALS
+    ============================================================= -->
+    <section id="testimonials" class="py-24 md:py-32 bg-dark text-cream">
+      <div class="max-w-4xl mx-auto px-6 md:px-10 lg:px-16 text-center">
+        <div class="reveal">
+          <p class="text-xs md:text-sm uppercase tracking-label text-accent font-medium mb-10">Отзывы</p>
+
+          <!-- Слайдер -->
+          <div id="testimonial-slider" class="relative min-h-[240px] md:min-h-[220px]">
+            <!-- Слайд 1 -->
+            <blockquote class="testimonial-slide transition-opacity duration-500 absolute inset-0 flex flex-col items-center justify-center" data-slide="0">
+              <p class="font-display text-2xl md:text-4xl leading-snug text-cream">
+                «Студия услышала нас с полуслова. Интерьер получился спокойным, тёплым и очень личным. Это пространство, в которое хочется возвращаться.»
+              </p>
+              <footer class="mt-8">
+                <span class="block text-sm uppercase tracking-label text-cream/80">Мария и Дмитрий К.</span>
+                <span class="block text-xs uppercase tracking-label text-cream/40 mt-1">Квартира, Москва</span>
+              </footer>
+            </blockquote>
+
+            <!-- Слайд 2 -->
+            <blockquote class="testimonial-slide opacity-0 transition-opacity duration-500 absolute inset-0 flex flex-col items-center justify-center" data-slide="1">
+              <p class="font-display text-2xl md:text-4xl leading-snug text-cream">
+                «Профессионализм на каждом этапе. Смета не менялась, сроки соблюдены, а офис стал лучшим аргументом для наших клиентов.»
+              </p>
+              <footer class="mt-8">
+                <span class="block text-sm uppercase tracking-label text-cream/80">Алексей Смирнов</span>
+                <span class="block text-xs uppercase tracking-label text-cream/40 mt-1">Директор, IT-компания</span>
+              </footer>
+            </blockquote>
+
+            <!-- Слайд 3 -->
+            <blockquote class="testimonial-slide opacity-0 transition-opacity duration-500 absolute inset-0 flex flex-col items-center justify-center" data-slide="2">
+              <p class="font-display text-2xl md:text-4xl leading-snug text-cream">
+                «Работали полностью под ключ. Отдельное спасибо за подбор света — вечером интерьер преображается до неузнаваемости.»
+              </p>
+              <footer class="mt-8">
+                <span class="block text-sm uppercase tracking-label text-cream/80">Екатерина Л.</span>
+                <span class="block text-xs uppercase tracking-label text-cream/40 mt-1">Загородный дом</span>
+              </footer>
+            </blockquote>
+          </div>
+
+          <!-- Точки навигации -->
+          <div class="mt-12 flex items-center justify-center gap-3" id="testimonial-dots">
+            <button type="button" data-dot="0" aria-label="Отзыв 1" class="dot w-8 h-px bg-accent"></button>
+            <button type="button" data-dot="1" aria-label="Отзыв 2" class="dot w-8 h-px bg-cream/25 hover:bg-cream/50 transition-colors"></button>
+            <button type="button" data-dot="2" aria-label="Отзыв 3" class="dot w-8 h-px bg-cream/25 hover:bg-cream/50 transition-colors"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CALCULATOR — «Рассчитайте стоимость проекта»
+    ============================================================= -->
+    <section id="calculator" class="py-24 md:py-32 bg-cream border-t border-line">
+      <div class="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+          <!-- Текст -->
+          <div class="reveal max-w-xl">
+            <p class="text-xs md:text-sm uppercase tracking-label text-accent font-medium mb-4">Калькулятор</p>
+            <h2 class="font-display text-3xl md:text-5xl leading-tight tracking-tight text-ink">
+              Рассчитайте<br /> стоимость проекта
+            </h2>
+            <span class="block w-16 h-px bg-accent mt-8 mb-8"></span>
+            <p class="text-base md:text-lg font-light leading-relaxed text-muted">
+              Передвиньте ползунок, чтобы узнать ориентировочную стоимость дизайн-проекта. Ставка — 4 500 ₽ за м².
+            </p>
+          </div>
+
+          <!-- Калькулятор -->
+          <div class="reveal bg-dark text-cream p-8 md:p-12" data-delay="150">
+            <!-- Текущее значение -->
+            <div class="flex items-end justify-between gap-6">
+              <span id="calc-area" class="font-display text-5xl md:text-6xl text-accent leading-none">120</span>
+              <span class="text-sm uppercase tracking-label text-cream/60 pb-1">м²</span>
+            </div>
+
+            <!-- Ползунок -->
+            <div class="mt-8">
+              <input id="calc-range" type="range" min="40" max="300" step="10" value="120"
+                class="range" aria-label="Площадь объекта в квадратных метрах" />
+              <div class="flex justify-between mt-3 text-[10px] uppercase tracking-label text-cream/40">
+                <span>40 м²</span>
+                <span>300 м²</span>
+              </div>
+            </div>
+
+            <!-- Итоговая стоимость -->
+            <div class="mt-10 pt-8 border-t border-cream/15 flex items-end justify-between gap-6">
+              <span class="text-xs uppercase tracking-label text-cream/60">Стоимость проекта</span>
+              <span id="calc-price" class="font-display text-3xl md:text-4xl text-cream whitespace-nowrap">540 000 ₽</span>
+            </div>
+
+            <div class="mt-10">
+              <a href="#contact" class="group inline-flex items-center gap-3 px-8 py-4 border border-cream/40 text-cream text-xs uppercase tracking-label font-medium hover:bg-accent hover:border-accent hover:text-ink transition-colors">
+                Получить точную смету
+                <span class="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CONTACT / CTA
+    ============================================================= -->
+    <section id="contact" class="py-24 md:py-32 bg-[#1A1A1A] text-white">
+      <div class="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20">
+
+          <!-- Форма (слева) -->
+          <div class="reveal">
+            <p class="text-xs md:text-sm uppercase tracking-label text-accent font-medium mb-4">Контакты</p>
+            <h2 class="font-display text-3xl md:text-5xl leading-tight tracking-tight text-white">
+              Оставьте заявку
+            </h2>
+            <span class="block w-16 h-px bg-accent mt-8 mb-10"></span>
+
+            <form id="contact-form" novalidate class="space-y-8 max-w-md">
+              <div>
+                <label for="name" class="block text-xs uppercase tracking-label text-white/50 mb-3">Имя</label>
+                <input type="text" id="name" name="name" autocomplete="name" placeholder="Как к вам обращаться"
+                  class="w-full bg-transparent border-0 border-b border-white/25 focus:border-accent outline-none py-3 text-white placeholder:text-white/30 transition-colors" />
+                <p class="error-message hidden text-xs text-red-400 mt-2" data-error-for="name"></p>
+              </div>
+
+              <div>
+                <label for="phone" class="block text-xs uppercase tracking-label text-white/50 mb-3">Телефон</label>
+                <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+7 (___) ___-__-__"
+                  class="w-full bg-transparent border-0 border-b border-white/25 focus:border-accent outline-none py-3 text-white placeholder:text-white/30 transition-colors" />
+                <p class="error-message hidden text-xs text-red-400 mt-2" data-error-for="phone"></p>
+              </div>
+
+              <div class="pt-2 flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                <button type="submit" class="inline-flex items-center justify-center px-8 py-4 bg-accent text-ink text-xs uppercase tracking-label font-medium hover:bg-accent-dark transition-colors">
+                  Оставить заявку
+                </button>
+                <p id="form-success" class="hidden text-sm text-accent">Спасибо! Заявка отправлена — мы свяжемся с вами.</p>
+              </div>
+            </form>
+          </div>
+
+          <!-- Контакты (справа) -->
+          <div class="reveal" data-delay="150">
+            <ul class="space-y-8 text-sm lg:pt-24">
+              <li class="border-t border-white/15 pt-6">
+                <p class="text-xs uppercase tracking-label text-white/40 mb-3">Телефон</p>
+                <a href="tel:+74951234567" class="font-display text-2xl md:text-3xl text-white hover:text-accent transition-colors">+7 (495) 123-45-67</a>
+              </li>
+              <li class="border-t border-white/15 pt-6">
+                <p class="text-xs uppercase tracking-label text-white/40 mb-3">Мессенджеры</p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                  <a href="https://t.me/kiseleva_studio" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-white/80 hover:text-accent transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.94 4.64a1.5 1.5 0 0 0-2.05-1.09L2.9 10.8c-1.21.46-1.19 1.77.03 2.2l4.42 1.56 1.7 5.5c.33 1.06 1.7 1.33 2.42.48l2.4-2.83 4.4 3.28c.83.62 2.02.17 2.24-.86l3.43-15.5Zm-3.3 1.6-8.9 8.28a1.2 1.2 0 0 0-.38.72l-.3 1.9-1.05-3.4 11.6-7.9-1.67.4Z"/></svg>
+                    Telegram
+                  </a>
+                  <a href="https://wa.me/74951234567" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-white/80 hover:text-accent transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20Zm4.5-5.9c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.1-.2 0-.4.1-.5l.4-.5.2-.5v-.4l-.7-1.6c-.2-.4-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3c-.2.3-.9.9-.9 2.1s.9 2.5 1 2.6c.1.2 1.7 2.7 4.2 3.7 1.6.6 2.2.7 3 .5.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1l-.6-.3Z"/></svg>
+                    WhatsApp
+                  </a>
+                </div>
+              </li>
+              <li class="border-t border-white/15 pt-6">
+                <p class="text-xs uppercase tracking-label text-white/40 mb-3">Адрес студии</p>
+                <p class="text-lg text-white leading-relaxed">Москва, ул. Малая Бронная, 12<br />офис 4, этаж 3</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================= -->
+  <footer class="bg-[#1A1A1A] text-white pt-20 pb-10">
+    <div class="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 pb-14">
+        <!-- Бренд -->
+        <div class="lg:col-span-1">
+          <a href="#hero" class="font-display text-3xl tracking-tight text-white">Kiseleva<span class="text-accent">.</span></a>
+          <p class="mt-5 text-sm font-light leading-relaxed text-white/50 max-w-xs">
+            Студия дизайна интерьеров. Пространства с характером — от концепции до реализации.
+          </p>
+        </div>
+
+        <!-- Навигация -->
+        <div>
+          <p class="text-xs uppercase tracking-label text-accent mb-6">Навигация</p>
+          <ul class="space-y-3 text-sm">
+            <li><a href="#about" class="text-white/70 hover:text-accent transition-colors">О студии</a></li>
+            <li><a href="#services" class="text-white/70 hover:text-accent transition-colors">Услуги</a></li>
+            <li><a href="#portfolio" class="text-white/70 hover:text-accent transition-colors">Проекты</a></li>
+            <li><a href="#process" class="text-white/70 hover:text-accent transition-colors">Процесс</a></li>
+          </ul>
+        </div>
+
+        <!-- Контакты -->
+        <div>
+          <p class="text-xs uppercase tracking-label text-accent mb-6">Контакты</p>
+          <ul class="space-y-3 text-sm">
+            <li><a href="tel:+74951234567" class="text-white/70 hover:text-accent transition-colors">+7 (495) 123-45-67</a></li>
+            <li><a href="https://t.me/kiseleva_studio" target="_blank" rel="noopener" class="text-white/70 hover:text-accent transition-colors">Telegram</a></li>
+            <li><a href="https://wa.me/74951234567" target="_blank" rel="noopener" class="text-white/70 hover:text-accent transition-colors">WhatsApp</a></li>
+            <li class="text-white/70">Москва, ул. Малая Бронная, 12</li>
+          </ul>
+        </div>
+
+        <!-- Соцсети -->
+        <div>
+          <p class="text-xs uppercase tracking-label text-accent mb-6">Соцсети</p>
+          <ul class="space-y-3 text-sm">
+            <li><a href="#" class="text-white/70 hover:text-accent transition-colors">Instagram</a></li>
+            <li><a href="#" class="text-white/70 hover:text-accent transition-colors">Pinterest</a></li>
+            <li><a href="https://t.me/kiseleva_studio" target="_blank" rel="noopener" class="text-white/70 hover:text-accent transition-colors">Telegram</a></li>
+            <li><a href="#" class="text-white/70 hover:text-accent transition-colors">Behance</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-xs uppercase tracking-label text-white/40">© 2026 Kiseleva. Все права защищены.</p>
+        <p class="text-xs uppercase tracking-label text-white/40">Дизайн интерьеров · Москва</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Кнопка "наверх" -->
+  <button id="back-to-top" type="button" aria-label="Наверх"
+    class="fixed bottom-8 right-8 z-40 w-12 h-12 bg-ink text-cream flex items-center justify-center opacity-0 pointer-events-none hover:bg-accent hover:text-ink transition-all duration-300">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>

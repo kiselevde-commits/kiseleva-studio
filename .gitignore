@@ -1,0 +1,30 @@
+# Служебные файлы правил проекта (не публикуются)
+zoo.rules
+
+# Логи
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Редакторы / IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# Зависимости и сборка (на случай добавления инструментов)
+node_modules/
+dist/
+build/
+.cache/
+
+# Переменные окружения и секреты
+.env
+.env.*
+!.env.example
