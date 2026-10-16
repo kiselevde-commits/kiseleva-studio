@@ -2,6 +2,8 @@
 
 Премиальный одностраничный лендинг студии дизайна интерьеров. Стиль — *Quiet Luxury*: тёплый молочный фон, глубокий графитовый текст, приглушённое золото в акцентах и много «воздуха».
 
+> **🌐 Живой сайт:** [https://kiselevde-commits.github.io/kiseleva-studio/](https://kiselevde-commits.github.io/kiseleva-studio/)
+
 ## Возможности
 
 - **Адаптивная вёрстка** (Mobile First) — корректно отображается на смартфонах, планшетах и десктопе.
@@ -32,6 +34,15 @@
 ├── LICENSE       # Лицензия MIT
 └── README.md     # Документация проекта
 ```
+
+## Развёртывание (GitHub Pages)
+
+Сайт автоматически публикуется из корня ветки `main` через GitHub Pages:
+
+- Источник: ветка `main`, папка `/`
+- Адрес: [https://kiselevde-commits.github.io/kiseleva-studio/](https://kiselevde-commits.github.io/kiseleva-studio/)
+
+После каждого `git push` в `main` GitHub Pages пересобирает сайт автоматически (обычно 1–2 минуты).
 
 ## Запуск
 
